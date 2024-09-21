@@ -36,17 +36,14 @@ public void PlayerMove(int index)
         Debug.Log("game is not active");
         gameActive = true;
         firstMoveMade = true; 
-        DisableDifficultyButtons(); 
+        DisableDifficultyButtons();  
     }
-
-    Debug.Log("continue");
 
     int row = index / 3;
     int col = index % 3;
 
     if (board[row, col] == "")
     {
-        Debug.Log("entered if");
         board[row, col] = player;
         buttons[index].GetComponent<Image>().sprite = xSprite;
         buttons[index].interactable = false;
@@ -61,7 +58,7 @@ public void PlayerMove(int index)
         }
         else
         {
-            DisableButtons();
+            DisableButtons(); 
             StartCoroutine(ComputerMove());
         }
     }
@@ -266,19 +263,19 @@ private bool CheckForWinner()
     return false;
 }
 
- private void EndGame(string message)
+private void EndGame(string message)
+{
+    Debug.Log("game ended");
+    resultText.text = message;
+    gameActive = false;
+    foreach (var button in buttons)
     {
-        Debug.Log("game ended");
-        resultText.text = message;
-        gameActive = false;
-        foreach (var button in buttons)
-        {
-            button.interactable = false; 
-        }
-        restartButton.gameObject.SetActive(true);
-        EnableDifficultyButtons(); 
-        firstMoveMade = false; 
+        button.interactable = false; 
     }
+    restartButton.gameObject.SetActive(true);
+    EnableDifficultyButtons();  
+}
+
 
 private void RestartGame()
 {
@@ -287,8 +284,9 @@ private void RestartGame()
     gameActive = false; 
     resultText.text = "";
     restartButton.gameObject.SetActive(false);
-    EnableDifficultyButtons(); 
+    EnableDifficultyButtons();  
 }
+
 
 private void InitializeBoard()
 {
@@ -311,19 +309,20 @@ private void InitializeBoard()
 
     gameActive = false; 
 }
-    private void EnableDifficultyButtons()
-    {
-        Debug.Log("difficulty Buttons Enabled");
-        difficultyController.easyButton.interactable = true;
-        difficultyController.mediumButton.interactable = true;
-        difficultyController.hardButton.interactable = true;
-    }
+private void EnableDifficultyButtons()
+{
+    Debug.Log("difficulty Buttons Enabled");
+    difficultyController.easyButton.interactable = true;
+    difficultyController.mediumButton.interactable = true;
+    difficultyController.hardButton.interactable = true;
+}
 
-    private void DisableDifficultyButtons()
-    {
-        Debug.Log("difficulty Buttons Disabled");
-        difficultyController.easyButton.interactable = false;
-        difficultyController.mediumButton.interactable = false;
-        difficultyController.hardButton.interactable = false;
-    }
+private void DisableDifficultyButtons()
+{
+    Debug.Log("difficulty Buttons Disabled");
+    difficultyController.easyButton.interactable = false;
+    difficultyController.mediumButton.interactable = false;
+    difficultyController.hardButton.interactable = false;
+}
+
 }
