@@ -55,9 +55,13 @@ public void PlayerMove(int index)
         {
             EndGame(player + " Wins!");
         }
+        else if (IsBoardFull())
+        {
+            EndGame("It's a Tie!");
+        }
         else
         {
-            DisableButtons(); 
+            DisableButtons();
             StartCoroutine(ComputerMove());
         }
     }
@@ -97,7 +101,14 @@ private IEnumerator ComputerMove()
         {
             EndGame(computer + " Wins!");
         }
-        EnableButtons();
+        else if (IsBoardFull())
+        {
+            EndGame("It's a Tie!");
+        }
+        else
+        {
+            EnableButtons();
+        }
     }
 
     private void ExecuteRandomMove()
@@ -252,13 +263,7 @@ private bool CheckForWinner()
     if (board[0, 2] == board[1, 1] && board[1, 1] == board[2, 0] && board[0, 2] != "")
         return true;
 
-    if (IsBoardFull())
-    {
-        EndGame("It's a Tie!");
-        return false; 
-    }
-
-    return false; 
+    return false;
 }
 
  private void EndGame(string message)
